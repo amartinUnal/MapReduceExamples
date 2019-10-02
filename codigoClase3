@@ -1,0 +1,50 @@
+%%writefile joinReduceTU.py
+#!/usr/bin/env python3
+import sys
+import string
+
+if __name__ == "__main__":
+	last_user_id = None
+	cur_location = "-"
+
+	for line in sys.stdin:
+		line = line.strip()
+		user_id,product_id,location = line.split("\t")
+
+		if not last_user_id or last_user_id != user_id:
+			last_user_id = user_id
+			cur_location = location
+		elif user_id == last_user_id:
+			location = cur_location
+			print(location + '\t1')
+		
+    
+
+%%writefile joinReduceTU2.py
+#!/usr/bin/env python3
+import sys
+import string
+
+if __name__ == "__main__":
+	total = 0
+	cur_location = "-"
+
+	for line in sys.stdin:
+		line = line.strip()
+		location, valor = line.split("\t")
+		valor = int(valor)
+
+		if total == 0:
+			cur_location = location
+			total = valor
+		elif cur_location != location:
+			print(cur_location + '\t' + str(total))
+			cur_location = location
+			total = valor
+		else:
+			total = total + valor
+
+	print(cur_location + '\t' + str(total))
+  
+  cat ./input/*.txt | ./joinMapperTU.py | sort -r | ./joinReduceTU.py | ./joinReduceTU2.py 
+  
