@@ -51,8 +51,14 @@ scientists and researchers to verify or disprove scientific models, theories and
 hypotheses.
 
 !rm -rf output
+!$HADOOP_HOME/bin/hadoop fs -rm -r input
+
 !$HADOOP_HOME/bin/hadoop fs -mkdir input
+
 !$HADOOP_HOME/bin/hadoop fs -put  input/* input
+
+!$HADOOP_HOME/bin/hadoop fs -ls input
+
 
 
 
