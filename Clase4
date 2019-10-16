@@ -1,4 +1,4 @@
-cd C:\Users\amart\UN\AnaliticaGVD\vagrant4dockerJDV
+cd 
 vagrant up
 vagrant ssh
 cd /vagrant
@@ -8,6 +8,13 @@ sudo docker-compose --f pig.yml up
 
 https://jdvelasq.github.io/courses/notebooks/hadoop/1-04-wordcount-streaming-python.html
 
+#################################################################################################################
+
+Terminal: 
+mr-jobhistory-daemon.sh start historyserver
+
+
+Python:
 
 
 !rm -rf input output
