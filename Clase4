@@ -65,3 +65,32 @@ hypotheses.
 # mr-jobhistory-daemon.sh start historyserver
 mr-jobhistory-daemon.sh stop historyserver
 mr-jobhistory-daemon.sh start historyserver
+
+
+
+
+
+
+# pig
+# 
+
+lines = LOAD 'input/text*.txt' AS (line:CHARARRAY);
+DUMP lines;
+
+
+-- genera una tabla llamada words con una palabra por registro
+words = FOREACH lines GENERATE FLATTEN(TOKENIZE(line)) AS word;
+
+-- agrupa los registros que tienen la misma palabra
+grouped = GROUP words BY word;
+
+-- genera una variable que cuenta las ocurrencias por cada grupo
+wordcount = FOREACH grouped GENERATE group, COUNT(words);
+
+-- selecciona las primeras 15 palabras
+s = LIMIT wordcount 15;
+
+-- imprime en pantalla las primeras 15 palabras
+DUMP s;
+
+
