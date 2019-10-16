@@ -94,3 +94,41 @@ s = LIMIT wordcount 15;
 DUMP s;
 
 
+
+
+#####################################################################################################################
+
+https://github.com/amartinUnal/MapReduceExamples/blob/master/Clase4
+
+mr-jobhistory-daemon.sh start historyserver
+
+!rm -rf input output
+!mkdir input
+
+- "8032:8032"
+lines = LOAD 'input/text*.txt' AS (line:CHARARRAY);
+words = FOREACH lines GENERATE FLATTEN(TOKENIZE(line)) AS word;
+grouped = GROUP words BY word;
+wordcount = FOREACH grouped GENERATE group, COUNT(words) % 4 AS totalWord;
+s = LIMIT wordcount 15;
+DUMP s;
+
+
+ord = ORDER wordcount BY totalWord DESC;
+s = LIMIT ord 15;
+DUMP s;
+
+FPALABRAS = FILTER wordcount BY group == 'and' OR group == 'data';
+DUMP FPALABRAS;
+
+wordcount = FOREACH grouped GENERATE group, COUNT(words) % 4 AS totalWord;
+CPALABRAS = FOREACH wordcount GENERATE group, (CASE totalWord WHEN 0 THEN 1 ELSE 2 END) AS CASEVALOR;
+DUMP CPALABRAS;
+
+
+
+CPALABRAS = FOREACH wordcount GENERATE group, (CASE totalWord WHEN 0 THEN 1 ELSE 2 END) AS CASEVALOR;
+F2PAL = FILTER CPALABRAS BY CASEVALOR == 1;
+DUMP F2PAL;
+
+
