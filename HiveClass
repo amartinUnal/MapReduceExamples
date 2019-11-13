@@ -44,3 +44,16 @@ scientists and researchers to verify or disprove scientific models, theories and
 hypotheses.
 
 
+%%hive
+DROP TABLE IF EXISTS docs;
+DROP TABLE IF EXISTS word_counts;
+CREATE TABLE docs (line STRING);
+
+
+%%hive
+LOAD DATA LOCAL INPATH "wordcount/" OVERWRITE INTO TABLE docs;
+SELECT * FROM docs LIMIT 5;
+
+
+
+
